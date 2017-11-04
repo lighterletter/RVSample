@@ -12,11 +12,7 @@ import java.util.List;
  */
 
 public class CustomAdapter extends RecyclerView.Adapter {
-
     private List<Model> models;
-    int viewType1 = 1111;
-    int vieType2 = 2222;
-
 
     public CustomAdapter(List<Model> models) {
         this.models = models;
@@ -24,28 +20,16 @@ public class CustomAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        if (viewType == viewType1) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.color_viewholder, parent, false);
-            return new ColorViewHolder(view); //rename fn+shift+f6
-        } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.textview_viewholder, parent, false);
-            return new TextViewHolder(view); //rename fn+shift+f6
-        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.textview_viewholder, parent, false);
+        return new AnimalViewHolder(view); //rename fn+shift+f6
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        getItemViewType(position);
-        if (getItemViewType(position) == viewType1) {
-            ColorViewHolder colorViewHolder = (ColorViewHolder) holder;
-            colorViewHolder.bind(models.get(position));
-        } else {
-            TextViewHolder textViewHolder = (TextViewHolder) holder;
-            Model model = models.get(position);
-            model.setPosition(position);
-            textViewHolder.bind(model);
-        }
+        AnimalViewHolder animalViewHolder = (AnimalViewHolder) holder;
+        Model model = models.get(position);
+        model.setPosition(position);
+        animalViewHolder.bind(model);
     }
 
     @Override
@@ -53,13 +37,4 @@ public class CustomAdapter extends RecyclerView.Adapter {
         return models.size();
     }
 
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position % 2 == 0) {
-            return viewType1;
-        } else {
-            return vieType2;
-        }
-    }
 }
